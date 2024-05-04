@@ -5,7 +5,7 @@ export const registerSchema = yup
       .string()
       .required("Username is required")
       .min(5, "Username should be at least 5 charachters"),
-      Email: yup
+      email: yup
       .string()
       .required("Email is required")
       .matches(/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/, "Not a valid email address."),

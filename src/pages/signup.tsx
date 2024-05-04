@@ -1,15 +1,18 @@
 import React,{useState,ChangeEvent} from 'react'
-import { Isignup } from '../interfaces';
+import { IErrorResponse } from '../interfaces';
 import loginpng from '../assets/loginpng.png';
-import './signup.css'
 import {Signuptype} from '../typs/index'
 import {SignupInputstyle} from '../typs/Style'
-import Button from './ui/Button';
-import Input from './ui/input';
+import Button from '../component/ui/Button';
+import Input from '../component/ui/input';
 import { useForm, SubmitHandler } from "react-hook-form"
-import InputErrorMessage from './ui/InputErrorMessage';
+import InputErrorMessage from '../component/ui/InputErrorMessage';
 import { yupResolver } from "@hookform/resolvers/yup"
 import { registerSchema } from '../validation';
+import axiosInstance from '../config/axios.config';
+import { AxiosError } from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface IFormInput {
   username: string;
@@ -17,16 +20,74 @@ interface IFormInput {
   password: string;
 }
 function Signup() {
-  
- 
+  const Navigate =useNavigate()
+  const [isLoading, setIsLoading] = useState(false); 
+  const notify = () => toast('Here is your toast.');
 
-   
+  const ToasterToaster = () => {
+    return (
+      <div>
+        <button onClick={notify}>Make me a toast</button>
+        <Toaster />
+      </div>
+    );
+  };
   
-    const { register, handleSubmit,formState:{errors} } = useForm<IFormInput>({resolver:yupResolver(registerSchema)})
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
-   console.log(errors);
+ const { register, handleSubmit,formState:{errors} } = useForm<IFormInput>({resolver:yupResolver(registerSchema)})
+ 
+  const onSubmit: SubmitHandler<IFormInput> = async data=>{
+    
+   // console.log(data)
+    try{
+      setIsLoading(true);
+     const {status} =   await axiosInstance.post("/auth/local/register",data,)
+
+     if (status === 200) {
+      toast.success(
+        "You will navigate to the login page after 2 seconds to login.",
+        {
+          position: "bottom-center",
+          duration: 1500,
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            width: "fit-content",
+          },
+        }
+      );
+
+      setTimeout(() => {
+        Navigate("/login");
+      }, 2000);
+    }
+     
+     }catch(errors){
+      ToasterToaster()
+     
+  //  const errorobj = errors as AxiosError<IErrorResponse>
+  //  toast.error(`${errorobj.response?.data.error.message}`, {
+  //   position: "bottom-center",
+  //   duration: 4000,
+  // });
+  // console.log(errorobj.response?.data.error.message);
+    // toast.error(
+    //   `${errorobj.response?.data.error.message}`,
+    //   {
+    //     position: "bottom-center",
+    //     duration: 4000,
+    //   });
    
+     }
+      
+     finally{
+      setIsLoading(false);
+     }
+    
   
+  } 
+   
+   
+   
 
     
 const renderinput= Signuptype.map(({name,type,id,label,validation})=><div className='flex flex-col' key={id}>
@@ -47,9 +108,10 @@ const renderinput= Signuptype.map(({name,type,id,label,validation})=><div classN
               <form onSubmit={handleSubmit(onSubmit)} className=' mt-6 w-full '>
                  {renderinput}
                 
-                <Button name='Signup'/>
+                <Button isLoading={isLoading} name={isLoading ? "Loading... " : "Register"} />
                 {/* <button type='submit' className='w-full mr-2 bg-[#4A3AFF] mt-3 font-DM Sans text-white  font-[18px] px-4 placeholder:px-2  shadow-[0_px_8px_20px_#4a3aff42 ] focus:outline-none rounded-[46px] py-[18px] w-100 border-solid border-2 border-[#F3F1FF]'>Signup</button> */}
               </form>
+              
               <p className='mt-4 ml-3 text-[#6F6C90] '>or <a href='#' className='text-[#4A3AFF] mr-2'>Login</a></p>
               </div>
              <div className='bg-[#F3F1FF] flex col-span-7 justify-center'>

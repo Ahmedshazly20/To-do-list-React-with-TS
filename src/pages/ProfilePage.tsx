@@ -1,6 +1,12 @@
 import React from 'react';
 
 const ProfilePage = () => {
+  const storgeKey ="LoggedinUser"
+const userDataString= localStorage.getItem(storgeKey)
+const userData = userDataString ? JSON.parse(userDataString) : null;
+console.log(userData);
+const {email,username} = userData.user;
+
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded shadow-lg">
@@ -10,13 +16,13 @@ const ProfilePage = () => {
             alt="Profile"
             className="w-32 h-32 mx-auto rounded-full"
           />
-          <h2 className="text-xl font-bold mt-2">John Doe</h2>
+          <h2 className="text-xl font-bold mt-2">{username}</h2>
           <p className="text-gray-600">Software Developer</p>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <h3 className="font-semibold mb-2">Contact Information</h3>
-            <p>Email: john.doe@example.com</p>
+            <p>Email: {email}</p>
             <p>Phone: +123456789</p>
           </div>
           <div>

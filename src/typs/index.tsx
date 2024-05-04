@@ -25,8 +25,8 @@ export const Signuptype:Isignup[] =[
 },
 {
     type :'text',
-    name:'Email',
-    id: "Email",
+    name:'email',
+    id: "email",
     label: "Email",
     validation: {
         required:"Email is required",
@@ -48,11 +48,11 @@ export const Signuptype:Isignup[] =[
 export const Logintype =[
     {
         type :'text',
-        name:'username',
+        name:'identifier',
         id: "username",
-        label: "Username",
+        label: "Email",
         validation: {
-            required: "username is required",
+            required: "Email is required",
             minLength: 5,
           },
     
