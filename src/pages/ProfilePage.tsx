@@ -4,7 +4,7 @@ const ProfilePage = () => {
   const storgeKey ="LoggedinUser"
 const userDataString= localStorage.getItem(storgeKey)
 const userData = userDataString ? JSON.parse(userDataString) : null;
-console.log(userData);
+
 const {email,username} = userData.user;
 
   return (

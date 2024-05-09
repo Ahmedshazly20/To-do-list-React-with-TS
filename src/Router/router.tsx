@@ -7,6 +7,7 @@ import LoginPage from '../pages/LoginPage';
 import PageNotFound from '../pages/PageNotFound';
 import ProfilePage from '../pages/ProfilePage';
 import Signup from '../pages/signup'
+import TodoList from './../pages/todo';
 
 
 const storgeKey ="LoggedinUser"
@@ -24,7 +25,7 @@ const router = createBrowserRouter(
             
         <Route path="/"  element={
            <ProtectedRoute isAllowed={userData?.jwt} redirected={"/login"} > 
-           <ProfilePage/>
+           <TodoList/>
            </ProtectedRoute>}/>
 
         <Route path="ProfilePage"  element={

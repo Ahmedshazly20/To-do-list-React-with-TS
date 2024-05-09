@@ -1,9 +1,11 @@
+import React from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useLocation,NavLink } from 'react-router-dom';
 
 const navigation = [
-  { name: 'home', href: '/home', current: true },
+  { name: 'home', href: '/', current: true },
   { name: 'profile', href: '/ProfilePage', current: false },
   { name: 'Projects', href: '/Projects', current: false },
   { name: 'Calendar', href: '/Calendar', current: false },
@@ -14,12 +16,22 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  
 
-const Signout = () => {
-  localStorage.removeItem("LoggedinUser")
-  setTimeout(() => {
-    location.replace("/");
-  }, 2000);}
+  const { pathname } = useLocation();
+  const storageKey = "loggedInUser";
+  const userDataString = localStorage.getItem(storageKey);
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  
+  const Signout = () => {
+    console.log("a5s4das5d4");
+    
+    // localStorage.removeItem(storageKey);
+    // setTimeout(() => {
+    //   location.replace(pathname);
+    // }, 1500);
+  };
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -49,9 +61,9 @@ const Signout = () => {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <NavLink
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
                           item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium'
@@ -59,7 +71,7 @@ const Signout = () => {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
