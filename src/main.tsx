@@ -6,11 +6,22 @@ import {
   QueryClientProvider,
   
 } from '@tanstack/react-query'
-
-const queryClient = new QueryClient()
+import { LocalToastProvider } from 'react-local-toast';
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
-      <App  />
+    <LocalToastProvider>
+    <App  />
+    </LocalToastProvider>
+     
+    
+  
   </QueryClientProvider>,
 )

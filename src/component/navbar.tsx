@@ -19,17 +19,16 @@ export default function Example() {
   
 
   const { pathname } = useLocation();
-  const storageKey = "loggedInUser";
+  const storageKey = "LoggedinUser";
   const userDataString = localStorage.getItem(storageKey);
   const userData = userDataString ? JSON.parse(userDataString) : null;
   
-  const Signout = () => {
-    console.log("a5s4das5d4");
-    
-    // localStorage.removeItem(storageKey);
-    // setTimeout(() => {
-    //   location.replace(pathname);
-    // }, 1500);
+  const Signout = () => {       
+     
+    localStorage.removeItem(storageKey);
+    setTimeout(() => {
+      location.replace(pathname);
+    }, 1500);
   };
 
   return (
@@ -135,7 +134,7 @@ export default function Example() {
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                             <button onClick={Signout()}>Sign out </button>  
+                             <button onClick={Signout}>Sign out </button>  
                           </a>
                         )}
                       </Menu.Item>

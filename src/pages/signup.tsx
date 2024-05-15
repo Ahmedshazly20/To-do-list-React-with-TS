@@ -11,8 +11,8 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { registerSchema } from '../validation';
 import axiosInstance from '../config/axios.config';
 import { AxiosError } from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 interface IFormInput {
   username: string;
@@ -22,39 +22,25 @@ interface IFormInput {
 function Signup() {
   const Navigate =useNavigate()
   const [isLoading, setIsLoading] = useState(false); 
-  const notify = () => toast('Here is your toast.');
 
-  const ToasterToaster = () => {
-    return (
-      <div>
-        <button onClick={notify}>Make me a toast</button>
-        <Toaster />
-      </div>
-    );
-  };
+
+
   
  const { register, handleSubmit,formState:{errors} } = useForm<IFormInput>({resolver:yupResolver(registerSchema)})
  
   const onSubmit: SubmitHandler<IFormInput> = async data=>{
     
-   // console.log(data)
+   
     try{
       setIsLoading(true);
      const {status} =   await axiosInstance.post("/auth/local/register",data,)
 
      if (status === 200) {
-      toast.success(
-        "You will navigate to the login page after 2 seconds to login.",
-        {
-          position: "bottom-center",
-          duration: 1500,
-          style: {
-            backgroundColor: "black",
-            color: "white",
-            width: "fit-content",
-          },
-        }
-      );
+      toast.success("Congratulations on becoming a part of our community!  ", {
+        position: 'top-center',
+        duration: 2500,
+        icon: '🎉',
+      });
 
       setTimeout(() => {
         Navigate("/login");
@@ -62,21 +48,8 @@ function Signup() {
     }
      
      }catch(errors){
-      ToasterToaster()
      
-  //  const errorobj = errors as AxiosError<IErrorResponse>
-  //  toast.error(`${errorobj.response?.data.error.message}`, {
-  //   position: "bottom-center",
-  //   duration: 4000,
-  // });
-  // console.log(errorobj.response?.data.error.message);
-    // toast.error(
-    //   `${errorobj.response?.data.error.message}`,
-    //   {
-    //     position: "bottom-center",
-    //     duration: 4000,
-    //   });
-   
+ 
      }
       
      finally{

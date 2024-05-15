@@ -1,1 +1,3 @@
-export const SignupInputstyle ="mr-2 mt-1 px-4 placeholder:px-2  shadow-[0_px_2px_6px_rgba(19,18,66,0.07)] focus:outline-none rounded-[40px] py-[18px] w-100 border-solid border-2 border-[#F3F1FF]"
+export const SignupInputstyle ="mr-2 mt-1 px-4 placeholder:px-2  shadow-[0_px_2px_6px_rgba(19,18,66,0.07)] focus:outline-none rounded-[40px] py-[18px] w-100 border-solid border-2 border-[#F3F1FF]";
+export const EditTodoInputstyle ="mt-4 ml-0 border-[1px] border-gray-300 shadow-md focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600 rounded-lg px-3 py-3 text-md w-full bg-transparent"
+export const addTodoInputstyle ="mt-2 ml-0 border-[1px] border-gray-300 shadow-md focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600 rounded-lg px-3 py-3 text-md w-full bg-transparent"

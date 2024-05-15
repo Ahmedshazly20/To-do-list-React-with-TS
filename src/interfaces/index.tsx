@@ -14,3 +14,8 @@ export interface IErrorResponse {
       message?: string;
     };
   }
+  export interface ITodo {
+    id: number;
+    todo: string;
+    description: string;
+  }
