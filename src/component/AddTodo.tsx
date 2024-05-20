@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import axiosInstance from './../config/axios.config';
 import { toast } from 'react-hot-toast';
 import { addTodoInputstyle } from './../typs/Style';
+import { faker } from '@faker-js/faker';
 
 interface ITodoAdd{
     todo: string,
@@ -18,6 +19,8 @@ interface ITodoAdd{
   
 
 export default function AddTodo() {
+
+
     const [openaddTodo ,setopenaddTodo] =useState(false)
     const [NewTodo ,setNewTodo] =useState<ITodo>({
         id: 0,
@@ -39,47 +42,60 @@ export default function AddTodo() {
     setNewTodo({ ...NewTodo, [name]: value });
 };
 
-          
+   //this function allow to add 100 todo    
+// const AddFakeTodos =async ()=>{
+//     for (let i = 0; i < 100; i++) {
+//       try{
+//         const {data} = await axiosInstance.post(`/todos/`, {
+//           data:{ todo:faker.word.words(5), description:faker.lorem.paragraph(8),user:[userData.user.id] }},
+//           {
+//             headers: {
+//               Authorization: `Bearer ${userData.jwt}`,
+//             },
+//           })
+//           console.log(data)
+//        }catch{(err: any)=> console.log(err)}
+
+     
+     
+//     }
+            
+            
+
+// }
           
 const { register, handleSubmit,formState:{errors} } = useForm<ITodoAdd>({
      resolver: yupResolver(UpdateTodo),
 })
-          
 
-          const EditSubmit: SubmitHandler<ITodoAdd> = async () =>{
-  
+
+     const EditSubmit: SubmitHandler<ITodoAdd> = async () =>{
             const { todo, description } = NewTodo;
-          
              try{
               const {status } = await axiosInstance.post(`/todos/`, {
-                data:{ todo, description }},
+                data:{ todo, description,user:[userData.user.id] }},
                 {
                   headers: {
                     Authorization: `Bearer ${userData.jwt}`,
                   },
                 }
                 )
-             }catch{(err: any)=>
-              console.log(err)
-          
-             }
-          
-             if(status =200){
-                isCloseEdit()
-              toast.success("Todo has added", {
-                position: 'top-center',
-                duration: 2500,
-                icon: '👏',
-              }); }}     
+             }catch{(err: any)=> console.log(err)}
+
+              if(status =200){
+                  isCloseEdit()
+                toast.success("Todo has added", {
+                  position: 'top-center',
+                  duration: 2500,
+                  icon: '👏',
+                }); }}     
 
   return (
     <div className=' mt-4 container '>
         <div className='flex items-center justify-center'>
           <button className='bg-[#4A3AFF] text-white px-6 py-1 rounded' onClick={()=>setopenaddTodo(true)}>AddTodo</button>
-
           <MyModal closeModal={isCloseEdit} isOpen={openaddTodo}  title='Add new todo'>
           <form className="space-y-3" onSubmit={handleSubmit(EditSubmit)}>
-
                 <div className="flex items-center flex-col  ">
                     <label className='text-lg font-semibold '>Todo title</label>
                 <Input   className={`${addTodoInputstyle}`} {...register("todo")}  name="todo"     onChange={onChangeHandler}/>
@@ -87,17 +103,14 @@ const { register, handleSubmit,formState:{errors} } = useForm<ITodoAdd>({
                 <label className=' mt-1'>Todo description</label>
                 <Textarea  
                     {...register("description")} 
-                    name="description"
-                  
+                    name="description"      
                     onChange={onChangeHandler}/>
                 </div>
-
                 <div className="flex items-center space-x-3">
                 <button type='submit' className="bg-indigo-600 py-1 px-3 rounded hover:bg-indigo-800 text-white">Add todo</button>
                 <button type='button' className="bg-gray-300  py-1 px-3 rounded hover:bg-gray-400" onClick={isCloseEdit}>Cancel</button>
                 </div>
          </form>
-
           </MyModal>
         </div>
         

@@ -14,6 +14,7 @@ import {  UpdateTodo } from '../validation';
 import InputErrorMessage from '../component/ui/InputErrorMessage';
 import { toast } from 'react-hot-toast';
 import AddTodo from './../component/AddTodo';
+import Paginator from '../component/ui/Pagnator';
 
 
 
@@ -40,9 +41,10 @@ const [todoToEdit, setTodoToEdit] = useState<ITodo>({
   description: "",
 });
 const [isOpen, setisOpen]= useState(false)
+const [queryVersion, setQueryVersion] = useState(1);
 const [isOpenRemove, setisOpenRemove]= useState(false)
 const {data ,isLoading }=useCustomQuery({
-  queryKey:["todos" ,`${todoToEdit.id}`],  
+  queryKey:["todos" ,`${queryVersion}`],  
   url:"/users/me?populate=todos",
   config:{headers:{Authorization:`bearer ${userData.jwt}`} }
 
@@ -96,6 +98,7 @@ const EditSubmit: SubmitHandler<ITodoAdd> = async () =>{
    }
 
    if(status =200){
+    setQueryVersion((prev) => prev + 1);
     onCancel()
     toast.success("Todo has updated", {
       position: 'top-center',
@@ -115,7 +118,7 @@ try{
       console.log(error);
     }
     if(status =200){
-    
+      setQueryVersion((prev) => prev + 1);
       toast.success("Todo has Removed", {
         position: 'top-center',
         duration: 2500,
@@ -207,6 +210,7 @@ if (isLoading)return <div>loading...</div>;
         </div>
         </form>
         </MyModal>
+        <Paginator/>
     </div>
   )
 }
