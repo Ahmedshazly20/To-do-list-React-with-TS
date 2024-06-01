@@ -40,8 +40,6 @@ const LoginPageandsignup = () => {
       });
       
       localStorage.setItem("LoggedinUser",JSON.stringify(userdata))
-   
-      
       setTimeout(() => {
         location.replace('/');
       }, 2500);
