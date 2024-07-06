@@ -1,4 +1,3 @@
-Here's a detailed and engaging `README.md` file for your project:
 
 ```markdown
 # Todo List Application with Authentication & Authorization
