@@ -121,4 +121,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Thank you for checking out our Todo List Application! We hope you find it useful and enjoyable to use.
 ```
 
-Feel free to customize this README to better fit your project's specifics or to add more details as necessary.
